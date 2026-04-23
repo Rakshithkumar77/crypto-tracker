@@ -1,0 +1,121 @@
+/* =========================================
+   Footer — Premium 4-column layout
+   ========================================= */
+
+.landing-footer {
+  background: #080910;
+  border-top: 1px solid rgba(45, 47, 74, 0.6);
+  margin-top: auto;
+}
+
+.landing-footer__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 60px 40px 40px;
+  display: grid;
+  grid-template-columns: 1.8fr 1fr 1fr 1fr;
+  gap: 48px;
+}
+
+/* Brand column */
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.footer-logo__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+}
+.footer-logo__name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+.footer-tagline {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #c4b5fd;
+  margin-bottom: 8px;
+}
+.footer-desc {
+  font-size: 0.8rem;
+  color: #64748b;
+  line-height: 1.6;
+  max-width: 220px;
+}
+
+/* Columns */
+.footer-heading {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #e2e8f0;
+  margin-bottom: 16px;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  color: #64748b;
+  text-align: left;
+  padding: 0;
+  transition: color 0.2s;
+  line-height: 1.5;
+}
+.footer-link:hover { color: #8b5cf6; }
+.footer-link--accent { color: #8b5cf6; }
+.footer-link--accent:hover { color: #a78bfa; }
+
+.footer-coming-soon {
+  font-size: 0.8rem;
+  color: #374151;
+  font-style: italic;
+}
+
+/* Bottom bar */
+.landing-footer__bottom {
+  border-top: 1px solid rgba(45, 47, 74, 0.5);
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px 40px;
+  font-size: 0.78rem;
+  color: #374151;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .landing-footer__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+}
+@media (max-width: 560px) {
+  .landing-footer__inner {
+    grid-template-columns: 1fr;
+    padding: 40px 24px 32px;
+  }
+  .landing-footer__bottom { padding: 16px 24px; }
+}

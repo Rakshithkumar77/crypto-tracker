@@ -1,0 +1,113 @@
+.coin-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  cursor: default;
+  transition: var(--transition);
+}
+
+.coin-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px var(--accent-light);
+}
+
+.coin-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.coin-identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  min-width: 0;
+}
+
+.coin-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.coin-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  max-width: 140px;
+}
+
+.coin-symbol {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.watch-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: var(--transition);
+  padding: 4px;
+  line-height: 1;
+}
+
+.watch-btn:hover { color: var(--yellow); transform: scale(1.2); }
+.watch-btn.watched { color: var(--yellow); }
+
+.coin-card-body {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.coin-price {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.coin-change {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+
+.coin-change.positive { background: var(--green-bg); color: var(--green); }
+.coin-change.negative { background: var(--red-bg);   color: var(--red); }
+
+.coin-card-footer {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+
+.coin-stat { display: flex; flex-direction: column; gap: 2px; }
+.coin-stat-label { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+.coin-stat-value { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); }
+
+.coin-card-cta {
+  display: block;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-light);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-glow);
+  border: 1px solid transparent;
+  transition: var(--transition);
+}
+
+.coin-card-cta:hover {
+  border-color: var(--accent);
+  background: rgba(124,58,237,0.2);
+}

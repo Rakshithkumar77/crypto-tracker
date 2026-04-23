@@ -1,0 +1,47 @@
+// Prisma Schema for Crypto Tracker
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  watchlistItems WatchlistItem[]
+
+  @@map("users")
+}
+
+model WatchlistItem {
+  id        String   @id @default(uuid())
+  coinId    String
+  coinName  String
+  coinSymbol String
+  coinImage  String?
+  userId    String
+  addedAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, coinId])
+  @@map("watchlist_items")
+}
+
+model CacheEntry {
+  id        String   @id
+  data      Json
+  ttl       Int      // seconds
+  createdAt DateTime @default(now())
+
+  @@map("cache_entries")
+}
