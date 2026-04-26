@@ -21,9 +21,11 @@ export const useCoins = (options = {}) => {
     try {
       const res = await getMarkets({ currency, page: p, perPage });
 
-      // ✅ FIX: CoinGecko returns array directly
-      if (Array.isArray(res.data)) {
-        setCoins(res.data);
+      // ✅ CORRECT FOR YOUR BACKEND
+      const coinsData = res?.data?.data?.coins;
+
+      if (Array.isArray(coinsData)) {
+        setCoins(coinsData);
       } else {
         setCoins([]);
       }
@@ -71,10 +73,10 @@ export const useSearch = () => {
       try {
         const res = await searchCoins(query);
 
-        // ✅ FIX: CoinGecko search format
-        setResults(res.data?.coins || []);
+        // ✅ FIX FOR YOUR BACKEND (if same structure)
+        setResults(res?.data?.data?.results || []);
 
-      } catch (err) {
+      } catch {
         setResults([]);
       } finally {
         setSearching(false);
