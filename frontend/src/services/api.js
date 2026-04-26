@@ -1,9 +1,10 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://3.110.60.247:5000/api", // ✅ Your AWS backend URL
-  timeout: 10000, // optional but good practice
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api",
+  timeout: 10000,
 });
+
 
 // ✅ Request interceptor (optional debug)
 api.interceptors.request.use(
