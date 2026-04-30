@@ -12,6 +12,12 @@ class CacheService {
   set(key, value, ttlSeconds) {
     const ttl = ttlSeconds || parseInt(process.env.CACHE_TTL_PRICES) || 60;
     this.cache.set(key, value, ttl);
+    // Store a permanent fallback copy in case of API rate limits
+    this.cache.set(`fallback:${key}`, value, 0); 
+  }
+
+  getFallback(key) {
+    return this.cache.get(`fallback:${key}`) ?? null;
   }
 
   del(key) {

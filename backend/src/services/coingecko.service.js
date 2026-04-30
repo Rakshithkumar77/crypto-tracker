@@ -11,13 +11,24 @@ const buildHeaders = () => {
   return headers;
 };
 
-const geckoGet = async (path, params = {}) => {
-  const res = await axios.get(`${BASE_URL}${path}`, {
-    headers: buildHeaders(),
-    params,
-    timeout: 10000,
-  });
-  return res.data;
+const geckoGet = async (path, params = {}, cacheKey = null) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${path}`, {
+      headers: buildHeaders(),
+      params,
+      timeout: 10000,
+    });
+    return res.data;
+  } catch (error) {
+    if (error.response && error.response.status === 429 && cacheKey) {
+      console.log(`[Rate Limit] 429 hit for ${path}. Using fallback cache for: ${cacheKey}`);
+      const fallbackData = cacheService.getFallback(cacheKey);
+      if (fallbackData) {
+        return fallbackData;
+      }
+    }
+    throw error;
+  }
 };
 
 /**
@@ -38,7 +49,7 @@ const getMarkets = async ({ currency = 'usd', page = 1, perPage = 20, ids = '' }
   };
   if (ids) params.ids = ids;
 
-  const data = await geckoGet('/coins/markets', params);
+  const data = await geckoGet('/coins/markets', params, cacheKey);
   cacheService.set(cacheKey, data, parseInt(process.env.CACHE_TTL_PRICES) || 60);
   return data;
 };
@@ -51,7 +62,7 @@ const searchCoins = async (query) => {
   const cached = cacheService.get(cacheKey);
   if (cached) return cached;
 
-  const data = await geckoGet('/search', { query });
+  const data = await geckoGet('/search', { query }, cacheKey);
   cacheService.set(cacheKey, data, parseInt(process.env.CACHE_TTL_SEARCH) || 600);
   return data;
 };
@@ -67,7 +78,7 @@ const getCoinChart = async (coinId, currency = 'usd', days = 7) => {
   const data = await geckoGet(`/coins/${coinId}/market_chart`, {
     vs_currency: currency,
     days,
-  });
+  }, cacheKey);
   cacheService.set(cacheKey, data, parseInt(process.env.CACHE_TTL_CHART) || 300);
   return data;
 };
@@ -86,7 +97,7 @@ const getCoinDetail = async (coinId) => {
     community_data: false,
     developer_data: false,
     sparkline: false,
-  });
+  }, cacheKey);
   cacheService.set(cacheKey, data, 120);
   return data;
 };
@@ -99,7 +110,7 @@ const getTrending = async () => {
   const cached = cacheService.get(cacheKey);
   if (cached) return cached;
 
-  const data = await geckoGet('/search/trending');
+  const data = await geckoGet('/search/trending', {}, cacheKey);
   cacheService.set(cacheKey, data, 300);
   return data;
 };

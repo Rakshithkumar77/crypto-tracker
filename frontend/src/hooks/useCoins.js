@@ -32,8 +32,13 @@ export const useCoins = (options = {}) => {
 
     } catch (err) {
       if (err.name !== 'CanceledError') {
-        setError(err.message || 'Failed to fetch coins');
-        setCoins([]);
+        const isRateLimit = err.response && err.response.status === 429;
+        if (isRateLimit) {
+          import('react-hot-toast').then(m => m.default.error('CoinGecko rate limit reached. Please wait a moment.', { id: 'rate-limit' }));
+        } else {
+          setError(err.message || 'Failed to fetch coins');
+          setCoins([]);
+        }
       }
     } finally {
       setLoading(false);
